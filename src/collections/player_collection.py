@@ -1,5 +1,3 @@
-from typing import Optional, Union
-
 from src.collections.casinoBalance import CasinoBalance
 from src.entities.player import Player
 
@@ -7,7 +5,7 @@ from src.entities.player import Player
 class PlayerCollection:
     """Списковая коллекция, использует CasinoBalance внутри"""
 
-    def __init__(self, casino_balance: Optional[CasinoBalance] = None):
+    def __init__(self, casino_balance: CasinoBalance | None = None):
         """
         Инициализация коллекции
 
@@ -26,7 +24,7 @@ class PlayerCollection:
         """Обновить индекс имён для быстрого доступа"""
         self._player_names = list(self._casino_balance.keys())
 
-    def __getitem__(self, key: Union[int, slice]) -> Union[Player, 'PlayerCollection']:
+    def __getitem__(self, key: int | slice) -> Player | 'PlayerCollection':
         """Доступ по индексу или срезу"""
         self._update_index()
 
@@ -49,7 +47,7 @@ class PlayerCollection:
         """Итерация по игрокам"""
         return iter(self._casino_balance.values())
 
-    def __contains__(self, item: Union[Player, str]) -> bool:
+    def __contains__(self, item: Player | str) -> bool:
         """Проверка наличия игрока"""
         if isinstance(item, Player):
             return item.name in self._casino_balance
@@ -62,7 +60,7 @@ class PlayerCollection:
         self._casino_balance.register_player(player)
         self._update_index()
 
-    def remove_player(self, identifier: Union[Player, str]) -> Optional[Player]:
+    def remove_player(self, identifier: Player | str) -> Player | None:
         """Удалить игрока"""
         if isinstance(identifier, Player):
             player_name = identifier.name
@@ -76,7 +74,7 @@ class PlayerCollection:
             self._update_index()
         return player
 
-    def find_player(self, name: str) -> Optional[Player]:
+    def find_player(self, name: str) -> Player | None:
         """Найти игрока по имени"""
         return self._casino_balance.get_player(name)
 

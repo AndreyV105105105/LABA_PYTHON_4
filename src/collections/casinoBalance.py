@@ -1,5 +1,3 @@
-from typing import Dict, Iterator, Optional
-
 from src.entities.player import Player
 
 
@@ -14,7 +12,7 @@ class CasinoBalance:
         """
         Инициализация коллекции балансов
         """
-        self._players: Dict[str, Player] = {}
+        self._players: dict[str, Player] = {}
         self._transaction_log: list = []
 
     def __getitem__(self, player_name: str) -> int:
@@ -71,10 +69,6 @@ class CasinoBalance:
     def __len__(self) -> int:
         """Количество игроков в коллекции"""
         return len(self._players)
-
-    def __iter__(self) -> Iterator[str]:
-        """Итерация по именам игроков"""
-        return iter(self._players)
 
     def __contains__(self, player_name: str) -> bool:
         """Проверка наличия игрока по имени"""
@@ -134,11 +128,11 @@ class CasinoBalance:
         self._players[player.name] = player
         self._log_transaction(player.name, 0, player.balance, "РЕГИСТРАЦИЯ")
 
-    def get_player(self, player_name: str) -> Optional[Player]:
+    def get_player(self, player_name: str) -> Player | None:
         """Получить объект Player по имени"""
         return self._players.get(player_name)
 
-    def remove_player(self, player_name: str) -> Optional[Player]:
+    def remove_player(self, player_name: str) -> Player | None:
         """Удалить игрока и вернуть его объект"""
         if player_name in self._players:
             player = self._players[player_name]
@@ -230,7 +224,7 @@ class CasinoBalance:
             return 0.0
         return self.get_total_balance() / len(self._players)
 
-    def get_transaction_log(self, player_name: Optional[str] = None) -> list:
+    def get_transaction_log(self, player_name: str | None = None) -> list:
         """Получить историю транзакций"""
         if player_name is None:
             return self._transaction_log.copy()

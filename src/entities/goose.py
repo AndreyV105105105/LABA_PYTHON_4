@@ -1,5 +1,4 @@
 import random
-from typing import Optional
 from src.entities.player import Player
 
 
@@ -136,7 +135,7 @@ class HonkGoose(Goose):
         """Сила специального эффекта"""
         return self._special_power
 
-    def honk(self, target_player: Optional[Player] = None) -> tuple[int, str]:
+    def honk(self, target_player: [Player] = None) -> tuple[int, str]:
         """
         Специальный крик с эффектом
 
@@ -190,7 +189,7 @@ class HonkGoose(Goose):
         player.receive_cash(attracted_amount)
         return attracted_amount, f"{description} и сносит яйцо для {player.name}, в котором оказывается {attracted_amount} монет!"
 
-    def __call__(self, target_player: Optional[Player] = None) -> tuple[int, str]:
+    def __call__(self, target_player: Player | None = None) -> tuple[int, str]:
         """
         Магический метод для вызова гуся как функции
 
@@ -268,7 +267,7 @@ class WarGoose(Goose):
         return 0, f"Гусь {self._name} пытался украсть у {player.name}, но не смог"
 
 
-    def __call__(self, target_player: Optional[Player] = None) -> tuple[int, str]:
+    def __call__(self, target_player: Player | None = None) -> tuple[int, str]:
         """
         Магический метод для вызова гуся как функции
 
