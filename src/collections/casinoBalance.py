@@ -74,6 +74,12 @@ class CasinoBalance:
         """Проверка наличия игрока по имени"""
         return player_name in self._players
 
+    def __iter__(self):
+        """
+        Итерирование по ключам (имена игроков), как у обычного dict.
+        """
+        return iter(self._players)
+
     def __repr__(self) -> str:
         """Официальное строковое представление"""
         items = [f"'{k}': Player(balance={v.balance})" for k, v in self._players.items()]

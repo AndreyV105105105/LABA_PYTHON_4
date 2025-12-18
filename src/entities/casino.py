@@ -116,6 +116,7 @@ class Casino:
         """
         goose = self._random_goose()
         player = self._random_player()
+
         if goose is None or player is None:
             print("[STEP] Нет гусей или активных игроков для события с гусём.")
             return
@@ -126,22 +127,19 @@ class Casino:
             delta, description = goose(player)
             print(f"[STEP] {description}")
 
-            # Обновим денежные потоки:
             if isinstance(goose, WarGoose) and delta > 0:
-                # украл у игрока -> доход гуся
                 self._add_goose_income(goose, delta)
             elif isinstance(goose, HonkGoose):
-                # delta > 0: игрок получил деньги
-                # delta < 0: игрок потерял деньги
                 if delta > 0:
                     self._casino_profit -= delta
                 elif delta < 0:
                     self._casino_profit += (-delta)
-        else:
-            stolen, description = goose.steal(player)
-            print(f"[STEP] {description}")
-            if stolen > 0:
-                self._add_goose_income(goose, stolen)
+            return
+
+        stolen, description = goose.steal(player)
+        print(f"[STEP] {description}")
+        if stolen > 0:
+            self._add_goose_income(goose, stolen)
 
     def goose_toggle_activity(self) -> None:
         """Случайно активировать/деактивировать гуся"""
@@ -156,6 +154,18 @@ class Casino:
         else:
             goose.activate()
             print(f"[STEP] Гусь {goose.name} активирован.")
+
+    def bonus_from_casino(self) -> None:
+        """Казино выдаёт бонус случайному активному игроку (5-е событие)."""
+        player = self._random_player()
+        if player is None:
+            print("[STEP] Нет активных игроков для бонуса.")
+            return
+
+        bonus = random.randint(5, 150)
+        self._casino_balance.receive_cash(player.name, bonus)
+        self._casino_profit -= bonus
+        print(f"[STEP] Бонус от казино: {player.name} получает {bonus}.")
 
     def panic_bankrupt(self) -> None:
         """Случайная паника: игрок теряет всё."""
@@ -172,18 +182,22 @@ class Casino:
     def step(self) -> None:
         """
         Один шаг симуляции: ровно одно случайное событие + лог в консоль.
+        Минимум 5 типов событий: panic + 4 в events.
         """
+        # событие №1
         if random.random() < 0.1:
             self.panic_bankrupt()
         else:
+            # события №2..№5
             events = [
                 self.player_bet_round,
                 self.goose_attack_or_honk,
-                self.goose_toggle_activity
+                self.goose_toggle_activity,
+                self.bonus_from_casino,
             ]
             random.choice(events)()
+
         print(f"[STATE] Прибыль казино: {self._casino_profit}")
-        # print(f"[STATE] Игроков: {len(self._players)}, гусей: {len(self._geese)}")
 
     def run_simulation(self, steps: int = 20, seed: int | None = None) -> None:
         """
