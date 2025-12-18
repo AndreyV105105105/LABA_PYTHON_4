@@ -104,7 +104,7 @@ class Goose:
             status = 'Активен'
         else:
             status = 'Неактивен'
-        return f"{status} Гусь {self._name} ({self.goose_type}, громкость: {self._honk_volume})"
+        return f"{status} Обычный Гусь {self._name} [Громкость: {self._honk_volume}]"
 
     def __repr__(self) -> str:
         """Официальное строковое представление для отладки"""

@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from src.collections.casinoBalance import CasinoBalance
 from src.entities.player import Player
 
@@ -20,11 +22,15 @@ class PlayerCollection:
         # Для быстрого доступа по индексу
         self._player_names = []
 
+    @property
+    def casino_balance(self) -> CasinoBalance:
+        return self._casino_balance
+
     def _update_index(self):
         """Обновить индекс имён для быстрого доступа"""
         self._player_names = list(self._casino_balance.keys())
 
-    def __getitem__(self, key: int | slice) -> Player | 'PlayerCollection':
+    def __getitem__(self, key: int | slice) -> Player | PlayerCollection:
         """Доступ по индексу или срезу"""
         self._update_index()
 
