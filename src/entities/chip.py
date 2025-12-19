@@ -59,7 +59,7 @@ class Chip:
 
     def split(self, amount_take: int) -> tuple["Chip", "Chip | None"]:
         """
-        Отделить `take` фишек от пачки.
+        Отделить `amount_take фишек от пачки.
 
         Возвращает:
           (взятая пачка, остаток или None)
