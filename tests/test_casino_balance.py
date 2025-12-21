@@ -1,5 +1,5 @@
 # import pytest
-from src.collections.casinoBalance import CasinoBalance
+from src.custom_collections.casinoBalance import CasinoBalance
 from src.entities.player import Player
 
 

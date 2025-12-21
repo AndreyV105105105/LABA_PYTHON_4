@@ -2,8 +2,8 @@ import random
 
 from src.entities.player import Player
 from src.entities.goose import Goose, WarGoose, HonkGoose
-from src.collections.casinoBalance import CasinoBalance
-from src.collections.player_collection import PlayerCollection
+from src.custom_collections.casinoBalance import CasinoBalance
+from src.custom_collections.player_collection import PlayerCollection
 
 
 class Casino:

@@ -1,5 +1,5 @@
 # import pytest
-from src.collections.player_collection import PlayerCollection
+from src.custom_collections.player_collection import PlayerCollection
 from src.entities.player import Player
 
 def test_player_collection_getitem_index(capsys):
